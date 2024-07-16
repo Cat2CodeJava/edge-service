@@ -27,6 +27,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
 	implementation 'org.springframework.session:spring-session-data-redis'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 
 	runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.110.Final:osx-aarch_64'
 
