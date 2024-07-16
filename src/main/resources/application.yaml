@@ -33,6 +33,7 @@ spring:
           max-life-time: 60s
       default-filters:
         - SaveSession
+        - TokenRelay
         - name: RequestRateLimiter
           args:
             redis-rate-limiter:
@@ -51,6 +52,10 @@ spring:
               factor: 2
               basedOnPreviousValue: false
       routes:
+        - id: spa-route
+          uri: ${SPA_URL:http://localhost:9004}
+          predicates:
+            - Path=/,/*.css,/*.js,/favicon.ico
         - id: catalog-route
           uri: ${CATALOG_SERVICE_URL:http://localhost:9001}/books
           predicates:
@@ -68,10 +73,6 @@ spring:
             - name: CircuitBreaker
               args:
                 name: orderCircuitBreaker
-        - id: spa-route
-          uri: ${SPA_URL:http://localhost:9004}
-          predicates:
-            - Path=/,/*.css,/*.js,/favicon.ico
   data:
     redis:
       connect-timeout: 2s
@@ -89,7 +90,7 @@ spring:
           keycloak:
             client-id: edge-service
             client-secret: polar-keycloak-secret
-            scope: openid
+            scope: openid,roles
         provider:
           keycloak:
             issuer-uri: http://localhost:8080/realms/PolarBookshop
